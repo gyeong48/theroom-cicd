@@ -2,20 +2,20 @@ version: '3'
 services:
   frontend:
     stdin_open: true
-    image: ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest
+    image: "${DOCKER_HUB_USERNAME}/theroom-frontend:latest"
     env_file:
       - ./front.env
     ports:
       - "3000:3000"
 
   backend:
-    image: ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest
+    image: "${DOCKER_HUB_USERNAME}/theroom-backend:latest"
     env_file:
       - ./back.env
     ports:
       - "8080:8080"
 
   nginx:
-    image: ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest
+    image: "${DOCKER_HUB_USERNAME}/theroom-nginx:latest"
     ports:
       - "80:80"
