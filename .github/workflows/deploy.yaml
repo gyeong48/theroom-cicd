@@ -24,16 +24,16 @@ jobs:
       # 3. Docker 이미지 build
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-frontend:latest ./frontend
-          docker build -t ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-backend:latest ./backend
-          docker build -t ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-nginx:latest ./nginx
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest ./frontend
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest ./backend
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest ./nginx
 
       # 4. Docker 이미지 push
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-frontend:latest
-          docker push ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-backend:latest
-          docker push ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}/theroom-nginx:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest
 
       # 5. docker-compose.yml, .env 파일 생성
       - name: Create docker-compose.yml and .env files
