@@ -21,21 +21,28 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESSTOKEN }}
 
-      # 3. Docker 이미지 build
+      # 3. Docker 이미지 remove
+      - name: Remove old Docker image
+        run: |
+          docker rmi ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest || true
+          docker rmi ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest || true
+          docker rmi ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest || true
+
+      # 4. Docker 이미지 build
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest ./frontend
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest ./backend
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest ./nginx
 
-      # 4. Docker 이미지 push
+      # 5. Docker 이미지 push
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-frontend:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest
 
-      # 5. docker-compose.yml, .env 파일 생성
+      # 6. docker-compose.yml, .env 파일 생성
       - name: Create docker-compose.yml and .env files
         run: |
           echo "${{ secrets.DOCKER_COMPOSE_YML_BASE64_ENCODE }}" | base64 -d > docker-compose.yml
@@ -43,7 +50,7 @@ jobs:
           echo "${{ secrets.BACK_ENV }}" > back.env
           echo "DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" > override.env
     
-      # 6. 파일 전송 (scp) - docker-compose.yml, .env ec2에 전송
+      # 7. 파일 전송 (scp) - docker-compose.yml, .env ec2에 전송
       - name: Upload Files to EC2
         uses: appleboy/scp-action@master
         with:
@@ -54,7 +61,7 @@ jobs:
           source: "docker-compose.yml,front.env,back.env,override.env"
           target: "~/app"
 
-      # 6. EC2에서 컨테이너 실행
+      # 8. EC2에서 컨테이너 실행
       - name: Deploy on EC2
         uses: appleboy/ssh-action@master
         with:
