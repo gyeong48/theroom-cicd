@@ -4,22 +4,22 @@ services:
     stdin_open: true
     image: "${DOCKER_HUB_USERNAME}/theroom-frontend:latest"
     env_file:
-      - ./override.env
-      - ./front.env
+      - override.env
+      - front.env
     ports:
       - "3000:3000"
 
   backend:
     image: "${DOCKER_HUB_USERNAME}/theroom-backend:latest"
     env_file:
-      - ./override.env
-      - ./back.env
+      - override.env
+      - back.env
     ports:
       - "8080:8080"
 
   nginx:
     image: "${DOCKER_HUB_USERNAME}/theroom-nginx:latest"
     env_file:
-      - ./override.env
+      - override.env
     ports:
       - "80:80"
