@@ -35,38 +35,34 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-backend:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest
 
-      # 5. docker-compose.yml, .env 파일 생성 및 ec2에 복사
+      # 5. docker-compose.yml, .env 파일 생성
       - name: Create docker-compose.yml and .env files
-        env: 
-          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-          DOCKER_COMPOSE_YML_BASE64_ENCODE: ${{ secrets.DOCKER_COMPOSE_YML_BASE64_ENCODE }}
-          FRONT_ENV: ${{ secrets.FRONT_ENV }}
-          BACK_ENV: ${{ secrets.BACK_ENV }}
         run: |
-          echo "$SSH_KEY" > private_key.pem
-          chmod 600 private_key.pem
-
-          echo "$DOCKER_COMPOSE_YML_BASE64_ENCODE" | base64 -d > docker-compose.yml
-          echo "$FRONT_ENV" > front.env
-          echo "$BACK_ENV" > back.env
-
-          ssh -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            mkdir -p ~/app
-          EOF
-
-          scp -i private_key.pem docker-compose.yml front.env back.env $EC2_USER@$EC2_HOST:~/app/
+          echo "${{ secrets.DOCKER_COMPOSE_YML_BASE64_ENCODE }}" | base64 -d > docker-compose.yml
+          echo "${{ secrets.FRONT_ENV }}" > front.env
+          echo "${{ secrets.BACK_ENV }}" > back.env
+    
+      # 6. 파일 전송 (scp) - docker-compose.yml, .env ec2에 전송
+      - name: Upload Files to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "docker-compose.yml,front.env,back.env"
+          target: "~/app"
 
       # 6. EC2에서 컨테이너 실행
       - name: Deploy on EC2
-        env:
-          PRIVATE_KEY: ${{ secrets.EC2_KEY }}
-          HOST: ${{ secrets.EC2_HOST }}
-          USER: ${{ secrets.EC2_USER }}
-        run: |
-          ssh -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
             cd ~/app
+            docker-compose down
             docker-compose pull
             docker-compose up -d
-          EOF
