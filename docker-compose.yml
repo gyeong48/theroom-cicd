@@ -13,7 +13,7 @@ services:
     image: "${DOCKER_HUB_USERNAME}/theroom-backend:latest"
     env_file:
       - override.env
-      - back.env
+      - /home/ec2-user/app/back.env
     ports:
       - "8080:8080"
 
