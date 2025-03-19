@@ -14,6 +14,6 @@ services:
       - /home/ec2-user/upload:/upload
 
   nginx:
-    image: lano8080/theroom-backend:latest
+    image: lano8080/theroom-nginx:latest
     ports:
       - "80:80"
