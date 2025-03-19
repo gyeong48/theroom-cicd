@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseUrl = `/api/content`
+const host = process.env.REACT_APP_SERVER_URL;
+const baseUrl = `${host}/api/content`
 axios.defaults.withCredentials = true;
 
 export const getContents = async (type) => {

@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const baseUrl = `/api/contact`
+const host = process.env.REACT_APP_SERVER_URL;
+const baseUrl = `${host}/api/contact`
 axios.defaults.withCredentials = true;
 
 export const postAddContact = async (body) => {

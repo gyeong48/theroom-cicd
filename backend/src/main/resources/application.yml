@@ -29,5 +29,5 @@ account:
 allow:
   origin:
     path:
-      main: http://ec2-3-39-137-110.ap-northeast-2.compute.amazonaws.com
-      sub: http://ec2-3-39-137-110.ap-northeast-2.compute.amazonaws.com
+      main: http://frontend:3000
+      sub: http://frontend:3000

@@ -1,6 +1,7 @@
 import axios from "axios"
 
-const baseUrl = `/api/account`
+const host = process.env.REACT_APP_SERVER_URL;
+const baseUrl = `${host}/api/account`
 axios.defaults.withCredentials = true;
 
 export const postLogin = async (body) => {
