@@ -1,7 +1,6 @@
 import axios from "axios"
 
-const host = process.env.REACT_APP_SERVER_URL;
-const baseUrl = `${host}/api/portfolio`
+const baseUrl = `/api/portfolio`
 axios.defaults.withCredentials = true;
 
 export const postAddPortfolio = async (body) => {
