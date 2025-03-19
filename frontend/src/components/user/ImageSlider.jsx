@@ -50,7 +50,7 @@ function ImageSlider() {
           <div key={index} className="w-full h-screen">
             <div
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${host}/api/content/view/${encodeURIComponent(image.uploadedName)})` }}
+              style={{ backgroundImage: `url(/api/content/view/${encodeURIComponent(image.uploadedName)})` }}
             />
           </div>
         ))}
