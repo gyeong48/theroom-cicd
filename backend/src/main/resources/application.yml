@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://cicd-mysql.c5q4usykozou.ap-northeast-2.rds.amazonaws.com:3306/theroom
     username: root
-    password: practice+secret
+    password: ghr42685
 
   jpa:
     generate-ddl: true
