@@ -2,24 +2,18 @@ version: '3'
 services:
   frontend:
     stdin_open: true
-    image: "${DOCKER_HUB_USERNAME}/theroom-frontend:latest"
-    env_file:
-      - override.env
-      - front.env
+    image: lano8080/theroom-frontend:latest
     ports:
       - "3000:3000"
 
   backend:
-    image: "${DOCKER_HUB_USERNAME}/theroom-backend:latest"
-    env_file:
-      - override.env
-      - /home/ec2-user/app/back.env
+    image: lano8080/theroom-backend:latest
     ports:
       - "8080:8080"
+    volumes:
+      - /home/ec2-user/upload:/upload
 
   nginx:
-    image: "${DOCKER_HUB_USERNAME}/theroom-nginx:latest"
-    env_file:
-      - override.env
+    image: lano8080/theroom-backend:latest
     ports:
       - "80:80"

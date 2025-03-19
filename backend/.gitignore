@@ -6,9 +6,6 @@ build/
 !**/src/test/**/build/
 
 ### USER ###
-/upload
-.env
-application.yml
 
 ### STS ###
 .apt_generated
