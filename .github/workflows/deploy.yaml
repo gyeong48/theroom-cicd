@@ -46,7 +46,7 @@ jobs:
       - name: Create docker-compose.yml and .env files
         run: |
           echo "${{ secrets.DOCKER_COMPOSE_YML_BASE64_ENCODE }}" | base64 -d > docker-compose.yml
-          echo "${{ secrets.OVERRIDE_ENV }}" > override.env
+          echo "DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" >> .env
           echo "${{ secrets.FRONT_ENV }}" > front.env
           echo "${{ secrets.BACK_ENV }}" > back.env
     

@@ -4,7 +4,7 @@ services:
     stdin_open: true
     image: "${DOCKER_HUB_USERNAME}/theroom-frontend:latest"
     env_file:
-      - override.env
+      - .env
       - front.env
     ports:
       - "3000:3000"
@@ -14,7 +14,7 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - override.env
+      - .env
       - back.env
     volumes:
       - /home/ec2-user/upload:/upload
@@ -22,6 +22,6 @@ services:
   nginx:
     image: "${DOCKER_HUB_USERNAME}/theroom-nginx:latest"
     env_file:
-      - override.env
+      - .env
     ports:
       - "80:80"
