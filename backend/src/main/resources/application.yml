@@ -1,14 +1,14 @@
 spring:
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 200MB
+      max-file-size: ${MAX_FILE_SIZE}
+      max-request-size: ${MAX_REQUEST_SIZE}
   
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://cicd-mysql.c5q4usykozou.ap-northeast-2.rds.amazonaws.com:3306/theroom
-    username: root
-    password: ghr42685
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
   jpa:
     generate-ddl: true
@@ -20,14 +20,14 @@ spring:
         show_sql: true
         
 upload:
-  path: /upload
+  path: ${FILE_UPLOAD_PATH}
 
 account:
-  username: theroom
-  password: pass
+  username: ${ACCOUNT_USERNAME}
+  password: ${ACCOUNT_PASSWORD}
 
 allow:
   origin:
     path:
-      main: http://ec2-43-201-200-15.ap-northeast-2.compute.amazonaws.com
-      sub: http://ec2-43-201-200-15.ap-northeast-2.compute.amazonaws.com
+      main: ${ORIGIN_MAIN}
+      sub: ${ORIGIN_SUB}
