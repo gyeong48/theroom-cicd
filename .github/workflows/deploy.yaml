@@ -58,7 +58,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          source: "docker-compose.yml,override.env,front.env,back.env"
+          source: "docker-compose.yml,.env,front.env,back.env"
           target: "~/app"
 
       # 8. EC2에서 컨테이너 실행
