@@ -15,7 +15,7 @@ export const postContents = async (type, body) => {
 }
 
 export const deleteContent = async (type, id) => {
-    const res = await axios.delete(`${baseUrl}/${type}/${id}`);
+    const res = await axios.delete(`${baseUrl}/${id}`);
     return res.data;
 }
 
