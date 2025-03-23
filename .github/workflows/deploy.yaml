@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -94,9 +94,9 @@ jobs:
               echo cert_exists=false >> $GITHUB_ENV
             fi
 
-      # 10. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
-      - name: Set GitHub Actions Environment Variable
-        run: echo "cert_exists=${{ steps.check_cert.outputs.stdout }}" >> $GITHUB_ENV
+      # # 10. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
+      # - name: Set GitHub Actions Environment Variable
+      #   run: echo "cert_exists=${{ steps.check_cert.outputs.stdout }}" >> $GITHUB_ENV
       
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
