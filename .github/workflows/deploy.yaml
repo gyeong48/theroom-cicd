@@ -89,12 +89,10 @@ jobs:
           port: 22
           script: |
             if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
-              echo "true"
+              echo "cert_exists=true"
             else
-              echo "false"
+              echo "cert_exists=false"
             fi
-        outputs:
-          cert_exists: ${{ steps.check_cert.outputs.stdout }}
 
       # 11. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
       - name: Set GitHub Actions Environment Variable
