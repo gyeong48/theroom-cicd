@@ -93,7 +93,7 @@ jobs:
             else
               echo "false"
             fi
-          register: cert_status
+        register: cert_status
 
       # 11. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
       - name: Set GitHub Actions Environment Variable
