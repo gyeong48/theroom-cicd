@@ -87,13 +87,13 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-        script: |
-          if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
-            echo "true"
-          else
-            echo "false"
-          fi
-        register: cert_status
+          script: |
+            if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
+              echo "true"
+            else
+              echo "false"
+            fi
+          register: cert_status
 
       # 11. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
       - name: Set GitHub Actions Environment Variable
