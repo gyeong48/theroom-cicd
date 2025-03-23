@@ -91,7 +91,7 @@ jobs:
             if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
               echo cert_exists=true >> $GITHUB_ENV
             else
-              echo "cert_exists=false >> $GITHUB_ENV
+              echo cert_exists=false >> $GITHUB_ENV
             fi
 
       # 10. SSL 인증서 존재 여부에 대한 현재 workflow에서 사용할 환경 변수 저장
