@@ -117,11 +117,15 @@ jobs:
           port: 22
           script: |
             docker run --rm --name certbot \
-              -v /etc/letsencrypt:/etc/letsencrypt \
-              -v /var/lib/letsencrypt:/var/lib/letsencrypt \
-              certbot/certbot certonly --webroot -w /usr/share/nginx/html \
-              -d theroomcicd.site -d www.theroomcicd.site --email seogyeonghwan48@gmail.com \
-              --agree-tos --no-eff-email --non-interactive
+              -v "/etc/letsencrypt:/etc/letsencrypt" \
+              -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
+              certbot/certbot \
+              certonly \
+              --webroot \
+              -w /var/lib/letsencrypt \
+              -d theroomcicd.site \
+              -d www.theroomcicd.com \
+              --agree-tos
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
       - name: Replace Nginx Config with HTTPS Version
