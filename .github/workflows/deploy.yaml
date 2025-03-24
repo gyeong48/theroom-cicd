@@ -89,9 +89,9 @@ jobs:
           port: 22
           script: |
             sudo bash -c 'if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
-              echo "true" > ~/cert_status.txt
+              echo "true" > /home/ec2-user/cert_status.txt
             else
-              echo "false" > ~/cert_status.txt
+              echo "false" > /home/ec2-user/cert_status.txt
             fi'
 
       - name: Retrieve SSL certificate status
@@ -102,7 +102,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: cat ~/cert_status.txt
+          script: cat /home/ec2-user/cert_status.txt
         env:
           CERT_STATUS: ${{ steps.get_cert_status.outputs.stdout }}
         
