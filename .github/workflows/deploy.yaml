@@ -89,17 +89,21 @@ jobs:
           port: 22
           script: |
             if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
-              echo "true" 
+              echo "true" > ~/cert_status.txt
             else
-              echo "false"
-            fi 
+              echo "false" > ~/cert_status.txt
+            fi
+
 
       - name: Set GitHub Actions Environment Variable
-        run: echo "cert_exists=${{ steps.check_cert.stdout }}" >> $GITHUB_ENV
+        run: |
+          CERT_STATUS=$(ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "cat ~/cert_status.txt")
+          echo "CERT_STATUS=$CERT_STATUS" >> $GITHUB_ENV
+
 
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
-        if: env.cert_exists == 'false'
+        if: env.CERT_STATUS == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -116,7 +120,7 @@ jobs:
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
       - name: Replace Nginx Config with HTTPS Version
-        if: env.cert_exists == 'false'
+        if: env.CERT_STATUS == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
