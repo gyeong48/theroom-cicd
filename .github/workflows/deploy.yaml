@@ -117,6 +117,7 @@ jobs:
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
       - name: Replace Nginx Config with HTTPS Version
+        if: env.SSL_STATUS == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
