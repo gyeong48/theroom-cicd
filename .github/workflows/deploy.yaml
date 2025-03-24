@@ -88,11 +88,11 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
+            sudo bash -c 'if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
               echo "true" > ~/cert_status.txt
             else
               echo "false" > ~/cert_status.txt
-            fi
+            fi'
 
       - name: Retrieve SSL certificate status
         id: get_cert_status
@@ -129,6 +129,7 @@ jobs:
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
       - name: Replace Nginx Config with HTTPS Version
+        if: ${{ steps.get_cert_status.outputs.stdout }} == 'true'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
