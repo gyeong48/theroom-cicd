@@ -100,7 +100,8 @@ jobs:
       
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
-        if: ${{ env.SSL_STATUS == 'false' }}
+        needs: check_cert
+        if: env.SSL_STATUS == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -126,4 +127,4 @@ jobs:
           script: |
             cd ~/app
             cp ./nginx_https.conf ./nginx.conf
-            docker restart ${{ secrets.DOCKER_HUB_USERNAME }}/theroom-nginx:latest
+            docker restart theroom-nginx
