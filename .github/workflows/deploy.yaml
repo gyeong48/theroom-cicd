@@ -94,11 +94,19 @@ jobs:
               echo "false" > ~/cert_status.txt
             fi
 
-      - name: Set GitHub Actions Environment Variable
-        run: |
-          CERT_STATUS=$(ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_PRIVATE_HOST }} "cat ~/cert_status.txt")
-          echo "CERT_STATUS=$CERT_STATUS" >> $GITHUB_ENV
-
+      - name: Retrieve SSL certificate status
+        id: get_cert_status
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: cat ~/cert_status.txt
+        env:
+          CERT_STATUS: ${{ steps.get_cert_status.outputs.stdout }}
+        run: echo "CERT_STATUS=$CERT_STATUS" >> $GITHUB_ENV
+        
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
         if: env.CERT_STATUS == 'false'
