@@ -105,7 +105,6 @@ jobs:
           script: cat ~/cert_status.txt
         env:
           CERT_STATUS: ${{ steps.get_cert_status.outputs.stdout }}
-        run: echo "CERT_STATUS=$CERT_STATUS" >> $GITHUB_ENV
         
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
