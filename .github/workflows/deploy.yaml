@@ -116,7 +116,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            docker run -it --rm --name certbot \
+            docker run --rm --name certbot \
               -v "/etc/letsencrypt:/etc/letsencrypt" \
               -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
               certbot/certbot \
@@ -124,7 +124,7 @@ jobs:
               --webroot \
               -w /var/lib/letsencrypt \
               -d theroomcicd.site \
-              -d www.theroomcicd.com \
+              -d www.theroomcicd.site \
               --agree-tos
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
