@@ -108,7 +108,7 @@ jobs:
         
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
-        if: env.CERT_STATUS == 'false'
+        if: ${{ steps.get_cert_status.outputs.stdout }} == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -125,7 +125,7 @@ jobs:
     
       # 12. HTTPS 적용이후, nginx.conf 변경 및 NGINX 재시작
       - name: Replace Nginx Config with HTTPS Version
-        if: env.CERT_STATUS == 'false'
+        if: ${{ steps.get_cert_status.outputs.stdout }} == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
