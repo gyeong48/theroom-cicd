@@ -89,14 +89,13 @@ jobs:
           port: 22
           script: |
             if [ -f "/etc/letsencrypt/live/theroomcicd.site/fullchain.pem" ]; then
-              echo "true"
+              echo "true" > ~/cert_status.txt
             else
-              echo "false"
-            fi
-            | tee cert_status.txt
+              echo "false" > ~/cert_status.txt
+            fi 
 
       - name: Set GitHub Actions Environment Variable
-        run: echo "cert_exists=$(cat cert_status.txt)" >> $GITHUB_ENV
+        run: echo "cert_exists=${{ steps.cert_status_output.outputs.stdout }}" >> $GITHUB_ENV
 
       # 11. SSL 인증서가 존재하지 않으면 발급
       - name: Issue SSL Certificate with Certbot
