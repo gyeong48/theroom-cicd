@@ -96,7 +96,7 @@ jobs:
 
       - name: Set GitHub Actions Environment Variable
         run: |
-          CERT_STATUS=$(ssh -i StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_PRIVATE_HOST }} "cat ~/cert_status.txt")
+          CERT_STATUS=$(ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_PRIVATE_HOST }} "cat ~/cert_status.txt")
           echo "CERT_STATUS=$CERT_STATUS" >> $GITHUB_ENV
 
       # 11. SSL 인증서가 존재하지 않으면 발급
