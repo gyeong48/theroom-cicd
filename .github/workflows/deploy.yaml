@@ -110,7 +110,7 @@ jobs:
       - name: Issue SSL Certificate with Certbot
         env:
           CERT_STATUS: ${{ steps.get_cert_status.outputs.stdout }}
-        if: $CERT_STATUS == 'false'
+        if: ${CERT_STATUS} == 'false'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
