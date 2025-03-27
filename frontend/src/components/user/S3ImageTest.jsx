@@ -1,7 +1,7 @@
 import React from 'react'
 
 function S3ImageTest() {
-    const imageUrl = "https://my-app-images.s3.ap-northeast-2.amazonaws.com/luke.jpg";
+    const imageUrl = "https://theroom-image-bucket.s3.ap-northeast-2.amazonaws.com/luke.jpg";
 
     return (
         <div className="flex flex-col items-center">
