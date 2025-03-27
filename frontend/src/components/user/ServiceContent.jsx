@@ -3,6 +3,7 @@ import { getContents } from '../../api/contentApi';
 import FetchingModal from '../common/FetchingModal';
 import useCustomMove from '../../hooks/useCustomMove';
 import QuoteButton from '../../components/user/QuoteButton'
+import S3ImageTest from './S3ImageTest';
 
 function ServiceContent() {
     const [serviceContents, setServiceContents] = useState(null);
@@ -43,7 +44,8 @@ function ServiceContent() {
                 </div>
             ))}
             <div className='pt-20'>
-            <QuoteButton />
+                <QuoteButton />
+                <S3ImageTest />
             </div>
         </div>
     )
